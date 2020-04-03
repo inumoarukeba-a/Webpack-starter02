@@ -35,14 +35,6 @@ Vue.use(VueScrollTo, {
 })
 
 /**
- * Vendor
- */
-import lazySizes from 'lazysizes'
-import Swiper from 'swiper'
-import * as PhotoSwipe from 'photoswipe'
-// import * as PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default'
-
-/**
  * Script
  */
 import _Inview from './_module/Inview'

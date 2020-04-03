@@ -1,100 +1,35 @@
 'use strict'
 
-export default class {
-  /**
-   * Constructor
-   */
-  constructor() {
-    this.Duration = 210
-    // Set
-    this.setting()
-  }
-
-  /**
-   * Setting
-   */
-  setting() {
-    document.addEventListener('click', event => {
-      const $TARGET = event.target.closest('.\\@accordion__trigger')
-      if ($TARGET) {
-        const $PARENT = event.target.closest('.\\@accordion')
-        const $CONTENT = $PARENT.querySelector('.\\@accordion__content')
-        $PARENT.classList.toggle('-opened')
-        this.slideToggle($CONTENT, $PARENT)
-      }
+const accordion = (
+  // 初期値
+  {
+    target = '@accordion',
+    summary = '@accordion__summary',
+    details = '@accordion__details',
+    speed = 1.5,
+    cssEase = 'ease-out',
+  } = {}
+) => {
+  const TARGET = document.querySelectorAll(target)
+  const TARGET_LENGTH = TARGET.length
+  for (let i = 0; i < TARGET_LENGTH; i++) {
+    let isShow = false
+    const CURRENT_TARGET = TARGET[i]
+    const SUMMARY = CURRENT_TARGET.querySelectorAll(summary)[0]
+    const DETAILS = CURRENT_TARGET.querySelectorAll(details)[0]
+    const MAX_HEIGHT = CONTENT.scrollHeight
+    const DURATION = MAX_HEIGHT * speed
+    details.style.transitionDuration = `${DURATION}ms`
+    details.style.transitionTimingFunction = cssEase
+    SUMMARY.addEventListener('click', () => {
+      details.style.height = isShow ? 0 : `${MAX_HEIGHT}px`
+      isShow = !isShow
     })
   }
-
-  /**
-   * Slide up
-   */
-  slideUp(target, parent, duration) {
-    target.style.transitionProperty = 'height, margin, padding'
-    target.style.transitionDuration = duration + 'ms'
-    target.style.boxSizing = 'border-box'
-    target.style.height = target.offsetHeight + 'px'
-    target.offsetHeight
-    target.style.overflow = 'hidden'
-    target.style.height = 0
-    target.style.paddingTop = 0
-    target.style.paddingBottom = 0
-    target.style.marginTop = 0
-    target.style.marginBottom = 0
-    window.setTimeout(() => {
-      target.style.display = 'none'
-      target.style.removeProperty('height')
-      target.style.removeProperty('padding-top')
-      target.style.removeProperty('padding-bottom')
-      target.style.removeProperty('margin-top')
-      target.style.removeProperty('margin-bottom')
-      target.style.removeProperty('overflow')
-      target.style.removeProperty('transition-duration')
-      target.style.removeProperty('transition-property')
-    }, duration)
-  }
-
-  /**
-   * slide down
-   */
-  slideDown(target, parent, duration) {
-    target.style.removeProperty('display')
-    let display = window.getComputedStyle(target).display
-
-    if (display === 'none') display = 'block'
-
-    target.style.display = display
-    let height = target.offsetHeight
-    target.style.overflow = 'hidden'
-    target.style.height = 0
-    target.style.paddingTop = 0
-    target.style.paddingBottom = 0
-    target.style.marginTop = 0
-    target.style.marginBottom = 0
-    target.offsetHeight
-    target.style.boxSizing = 'border-box'
-    target.style.transitionProperty = 'height, margin, padding'
-    target.style.transitionDuration = duration + 'ms'
-    target.style.height = height + 'px'
-    target.style.removeProperty('padding-top')
-    target.style.removeProperty('padding-bottom')
-    target.style.removeProperty('margin-top')
-    target.style.removeProperty('margin-bottom')
-    window.setTimeout(() => {
-      target.style.removeProperty('height')
-      target.style.removeProperty('overflow')
-      target.style.removeProperty('transition-duration')
-      target.style.removeProperty('transition-property')
-    }, duration)
-  }
-
-  /**
-   * Slide Toggle
-   */
-  slideToggle(target, parent, duration = this.Duration) {
-    if (window.getComputedStyle(target).display === 'none') {
-      return this.slideDown(target, parent, duration)
-    } else {
-      return this.slideUp(target, parent, duration)
-    }
-  }
 }
+
+// 実行
+accordion({
+  speed: 1, // 1で100px 100msのスピード
+  cssEase: 'ease',
+})
